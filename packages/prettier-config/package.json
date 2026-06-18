@@ -1,0 +1,14 @@
+{
+  "name": "@soh-utils/prettier-config",
+  "version": "0.1.0",
+  "description": "Shared Prettier configuration.",
+  "type": "module",
+  "exports": "./index.js",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "peerDependencies": {
+    "prettier": ">=3.0.0"
+  }
+}

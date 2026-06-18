@@ -1,0 +1,17 @@
+{
+  "name": "soh-utils-configs",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Monorepo for shared TypeScript, Prettier, and ESLint configs.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "packages:list": "lerna list",
+    "lint": "lerna run lint --stream --no-private",
+    "test": "lerna run test --stream --no-private"
+  },
+  "devDependencies": {
+    "lerna": "^8.0.0"
+  }
+}

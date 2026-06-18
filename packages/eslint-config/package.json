@@ -1,0 +1,40 @@
+{
+  "name": "@soh-utils/eslint-config",
+  "version": "0.0.0",
+  "description": "Shared ESLint flat configuration.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./base": "./base.js",
+    "./typescript": "./typescript.js",
+    "./next": "./next.js",
+    "./testing": "./testing.js",
+    "./playwright": "./playwright.js",
+    "./next-app": "./next-app.js"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "base.js",
+    "typescript.js",
+    "next.js",
+    "testing.js",
+    "playwright.js",
+    "next-app.js",
+    "utils.js"
+  ],
+  "dependencies": {
+    "@eslint/eslintrc": "3.3.5",
+    "@eslint/js": "9.39.4",
+    "eslint-config-next": "16.2.9",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-playwright": "2.10.4",
+    "eslint-plugin-testing-library": "7.16.2",
+    "eslint-plugin-vitest": "0.5.4",
+    "typescript-eslint": "8.61.1"
+  },
+  "peerDependencies": {
+    "eslint": ">=9",
+    "typescript": ">=5"
+  }
+}
