@@ -29,6 +29,7 @@ Other available presets:
 
 - `@soh-utils/tsconfig/node`
 - `@soh-utils/tsconfig/react-library`
+- `@soh-utils/tsconfig/next-app`
 
 ### Prettier
 
@@ -90,3 +91,21 @@ export default defineConfig([
   },
 ]);
 ```
+
+## Releasing
+
+This repo uses Changesets to manage package versions and npm releases.
+
+1. Create a changeset for package changes:
+
+```bash
+yarn changeset
+```
+
+2. Commit the generated file under `.changeset/`.
+
+3. When changes land on `main`, the GitHub Actions release workflow will:
+   - open or update a release PR with version bumps and changelog metadata
+   - publish the packages to npm after that release PR is merged
+
+The release workflow expects an `NPM_TOKEN` repository secret with permission to publish the `@soh-utils/*` packages.

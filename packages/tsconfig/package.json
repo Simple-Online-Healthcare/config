@@ -5,12 +5,14 @@
   "license": "MIT",
   "files": [
     "base.json",
+    "next-app.json",
     "node.json",
     "react-library.json"
   ],
   "exports": {
     ".": "./base.json",
     "./base": "./base.json",
+    "./next-app": "./next-app.json",
     "./node": "./node.json",
     "./react-library": "./react-library.json"
   },
