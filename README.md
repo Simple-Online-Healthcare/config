@@ -105,7 +105,7 @@ yarn changeset
 2. Commit the generated file under `.changeset/`.
 
 3. When changes land on `main`, the GitHub Actions release workflow will:
-   - open or update a release PR with version bumps and changelog metadata
+   - open or update a release PR with version bumps and generated package changelog updates
    - publish the packages to npm after that release PR is merged
 
 The release workflow expects an `NPM_TOKEN` repository secret with permission to publish the `@soh-config/*` packages.
