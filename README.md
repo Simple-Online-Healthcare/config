@@ -94,7 +94,7 @@ export default defineConfig([
 
 ## Releasing
 
-This repo uses Changesets to manage package versions and npm releases.
+This repo uses Changesets to manage package versions and GitHub Packages releases.
 
 1. Create a changeset for package changes:
 
@@ -106,6 +106,6 @@ yarn changeset
 
 3. When changes land on `main`, the GitHub Actions release workflow will:
    - open or update a release PR with version bumps and generated package changelog updates
-   - publish the packages to npm after that release PR is merged
+   - publish the packages to GitHub Packages after that release PR is merged
 
-The release workflow expects an `NPM_TOKEN` repository secret with permission to publish the `@simple-online-healthcare/*` packages.
+The release workflow publishes to `https://npm.pkg.github.com` using the workflow `GITHUB_TOKEN`, so the workflow repository needs `packages: write` permission.

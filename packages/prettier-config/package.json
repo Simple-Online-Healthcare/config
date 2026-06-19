@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "description": "Shared Prettier configuration.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simple-online-healthcare/config.git",
+    "directory": "packages/prettier-config"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "exports": "./index.js",
   "license": "MIT",
   "files": [

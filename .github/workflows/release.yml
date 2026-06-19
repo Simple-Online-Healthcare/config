@@ -11,6 +11,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
+      packages: write
       contents: write
       pull-requests: write
 
@@ -25,10 +26,18 @@ jobs:
         with:
           node-version: 20
           cache: yarn
-          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Configure GitHub Packages authentication
+        run: |
+          cat <<EOF > "$HOME/.npmrc"
+          @simple-online-healthcare:registry=https://npm.pkg.github.com
+          //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+          EOF
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create release pull request or publish packages
         uses: changesets/action@v1
@@ -40,4 +49,3 @@ jobs:
           createGithubReleases: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
