@@ -1,10 +1,4 @@
-# @simple-online-healthcare/prettier-config
-
-## 0.2.0
-
-### Minor Changes
-
-- 8a748e7: Rename the shared config packages from `@soh-config/*` to `@simple-online-healthcare/*`.
+# @simple-online-healthcare/prettier-conf
 
 ## 0.1.0
 

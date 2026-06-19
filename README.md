@@ -5,7 +5,7 @@ This repository is scaffolded as a Lerna + Yarn workspaces monorepo for reusable
 ## Packages
 
 - `@simple-online-healthcare/tsconfig`
-- `@simple-online-healthcare/prettier-config`
+- `@simple-online-healthcare/prettier-conf`
 - `@simple-online-healthcare/eslint-config`
 
 ## Getting started
@@ -37,7 +37,7 @@ In `package.json`:
 
 ```json
 {
-  "prettier": "@simple-online-healthcare/prettier-config"
+  "prettier": "@simple-online-healthcare/prettier-conf"
 }
 ```
 
