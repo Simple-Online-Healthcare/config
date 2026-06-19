@@ -1,5 +1,5 @@
 {
-  "name": "@soh-utils/prettier-config",
+  "name": "@soh-config/prettier-config",
   "version": "0.0.0",
   "description": "Shared Prettier configuration.",
   "type": "module",

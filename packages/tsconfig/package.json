@@ -1,5 +1,5 @@
 {
-  "name": "@soh-utils/tsconfig",
+  "name": "@soh-config/tsconfig",
   "version": "0.1.0",
   "description": "Shared TypeScript configurations.",
   "license": "MIT",
