@@ -1,5 +1,5 @@
 {
-  "name": "soh-utils-configs",
+  "name": "soh-config",
   "private": true,
   "version": "0.0.0",
   "description": "Monorepo for shared TypeScript, Prettier, and ESLint configs.",
@@ -7,11 +7,15 @@
     "packages/*"
   ],
   "scripts": {
+    "changeset": "changeset",
     "packages:list": "lerna list",
+    "release": "changeset publish",
     "lint": "lerna run lint --stream --no-private",
-    "test": "lerna run test --stream --no-private"
+    "test": "lerna run test --stream --no-private",
+    "version-packages": "changeset version"
   },
   "devDependencies": {
-    "lerna": "^8.0.0"
+    "@changesets/cli": "2.31.0",
+    "lerna": "8.2.4"
   }
 }
