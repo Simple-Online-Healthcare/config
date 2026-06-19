@@ -1,6 +1,11 @@
 {
+<<<<<<< Updated upstream
   "name": "@soh-config/prettier-config",
   "version": "0.0.0",
+=======
+  "name": "@simple-online-healthcare/prettier-config",
+  "version": "0.1.0",
+>>>>>>> Stashed changes
   "description": "Shared Prettier configuration.",
   "type": "module",
   "exports": "./index.js",

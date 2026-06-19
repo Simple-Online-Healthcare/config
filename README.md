@@ -4,9 +4,9 @@ This repository is scaffolded as a Lerna + Yarn workspaces monorepo for reusable
 
 ## Packages
 
-- `@soh-config/tsconfig`
-- `@soh-config/prettier-config`
-- `@soh-config/eslint-config`
+- `@simple-online-healthcare/tsconfig`
+- `@simple-online-healthcare/prettier-config`
+- `@simple-online-healthcare/eslint-config`
 
 ## Getting started
 
@@ -21,15 +21,15 @@ yarn packages:list
 
 ```json
 {
-  "extends": "@soh-config/tsconfig/base"
+  "extends": "@simple-online-healthcare/tsconfig/base"
 }
 ```
 
 Other available presets:
 
-- `@soh-config/tsconfig/node`
-- `@soh-config/tsconfig/react-library`
-- `@soh-config/tsconfig/next-app`
+- `@simple-online-healthcare/tsconfig/node`
+- `@simple-online-healthcare/tsconfig/react-library`
+- `@simple-online-healthcare/tsconfig/next-app`
 
 ### Prettier
 
@@ -37,7 +37,7 @@ In `package.json`:
 
 ```json
 {
-  "prettier": "@soh-config/prettier-config"
+  "prettier": "@simple-online-healthcare/prettier-config"
 }
 ```
 
@@ -47,29 +47,29 @@ In `eslint.config.js`:
 
 ```js
 import { defineConfig } from "eslint/config";
-import defaultSharedConfig from "@soh-config/eslint-config";
+import defaultSharedConfig from "@simple-online-healthcare/eslint-config";
 
 export default defineConfig(defaultSharedConfig);
 ```
 
-`@soh-config/eslint-config` is the default shared baseline for JavaScript and TypeScript projects.
+`@simple-online-healthcare/eslint-config` is the default shared baseline for JavaScript and TypeScript projects.
 
 For a Next.js app stack, use the shared app preset:
 
 ```js
 import { defineConfig } from "eslint/config";
-import nextAppPreset from "@soh-config/eslint-config/next-app";
+import nextAppPreset from "@simple-online-healthcare/eslint-config/next-app";
 
 export default defineConfig(nextAppPreset);
 ```
 
-`@soh-config/eslint-config/next-app` is the more opinionated preset for app repos that need Next.js, test, and e2e coverage out of the box.
+`@simple-online-healthcare/eslint-config/next-app` is the more opinionated preset for app repos that need Next.js, test, and e2e coverage out of the box.
 
 If a repo needs a tiny amount of local behavior on top, use the preset factory:
 
 ```js
 import { defineConfig } from "eslint/config";
-import { createNextAppConfig } from "@soh-config/eslint-config/next-app";
+import { createNextAppConfig } from "@simple-online-healthcare/eslint-config/next-app";
 
 export default defineConfig([
   ...createNextAppConfig({
@@ -108,4 +108,4 @@ yarn changeset
    - open or update a release PR with version bumps and generated package changelog updates
    - publish the packages to npm after that release PR is merged
 
-The release workflow expects an `NPM_TOKEN` repository secret with permission to publish the `@soh-config/*` packages.
+The release workflow expects an `NPM_TOKEN` repository secret with permission to publish the `@simple-online-healthcare/*` packages.

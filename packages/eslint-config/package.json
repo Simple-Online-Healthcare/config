@@ -1,6 +1,11 @@
 {
+<<<<<<< Updated upstream
   "name": "@soh-config/eslint-config",
   "version": "0.0.0",
+=======
+  "name": "@simple-online-healthcare/eslint-config",
+  "version": "0.1.0",
+>>>>>>> Stashed changes
   "description": "Shared ESLint flat configuration.",
   "type": "module",
   "exports": {
