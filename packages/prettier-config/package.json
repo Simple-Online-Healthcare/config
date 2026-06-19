@@ -1,6 +1,6 @@
 {
   "name": "@soh-config/prettier-config",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Shared Prettier configuration.",
   "type": "module",
   "exports": "./index.js",
