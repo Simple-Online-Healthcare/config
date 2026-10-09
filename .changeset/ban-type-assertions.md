@@ -2,4 +2,4 @@
 '@simple-online-healthcare/eslint-config': minor
 ---
 
-Restrict indirect TypeScript types, enforce type-aware correctness rules, and standardize type imports while continuing to allow inferred function returns, readable local inference, `satisfies`, and `as const`.
+Restrict indirect and explicit `any` TypeScript types, reject unused variables, enforce type-aware correctness rules, and standardize type imports while continuing to allow inferred function returns, readable local inference, `satisfies`, and `as const`.

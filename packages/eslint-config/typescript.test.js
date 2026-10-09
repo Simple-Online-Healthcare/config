@@ -237,10 +237,28 @@ test('rejects deprecated APIs', async () => {
   assert.equal(messages.length, 1);
 });
 
+test('rejects explicit any types', async () => {
+  const messages = await lintForRule(
+    'declare const value: any;\nvoid value;',
+    '@typescript-eslint/no-explicit-any',
+  );
+
+  assert.equal(messages.length, 1);
+});
+
 test('rejects unnecessary conditions', async () => {
   const messages = await lintForRule(
     'declare const user: object;\nif (user) { void user; }',
     '@typescript-eslint/no-unnecessary-condition',
+  );
+
+  assert.equal(messages.length, 1);
+});
+
+test('rejects unused variables', async () => {
+  const messages = await lintForRule(
+    'const unused = true;',
+    '@typescript-eslint/no-unused-vars',
   );
 
   assert.equal(messages.length, 1);
