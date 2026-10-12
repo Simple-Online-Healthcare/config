@@ -1,5 +1,11 @@
 # @simple-online-healthcare/eslint-config
 
+## 0.3.0
+
+### Minor Changes
+
+- f0e90d0: Restrict indirect and explicit `any` TypeScript types, reject unused variables, enforce type-aware correctness rules, and standardize type imports while continuing to allow inferred function returns, readable local inference, `satisfies`, and `as const`.
+
 ## 0.2.0
 
 ### Minor Changes
