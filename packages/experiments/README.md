@@ -56,7 +56,6 @@ import {
   getVariant,
   initializeExperiments,
   initSnowplowTracker,
-  registerDatadog,
   withDatadogFeatureFlagEvents,
 } from "@simple-online-healthcare/experiments";
 
@@ -69,17 +68,17 @@ export function startExperiments(userID?: string) {
       service: "kin",
     })
   );
-  registerDatadog({ rum: datadogRum, logs: datadogLogs });
   initSnowplowTracker("sp", process.env.NEXT_PUBLIC_SNOWPLOW_COLLECTOR_URL ?? "", {
     appId: "kin",
   });
   configureExperiments({
     clientKey: process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY ?? "",
-    environment: process.env.APP_ENVIRONMENT ?? "development",
+    environment: process.env.NEXT_PUBLIC_APP_ENVIRONMENT ?? "development",
     app: "kin",
-    appVersion: process.env.APP_GIT_SHA ?? "development",
+    appVersion: process.env.NEXT_PUBLIC_APP_GIT_SHA ?? "development",
     userID,
     productionHosts: ["www.simpleonlinepharmacy.co.uk", "simpleonlinepharmacy.co.uk"],
+    datadog: { rum: datadogRum, logs: datadogLogs },
   });
   return initializeExperiments();
 }
@@ -102,35 +101,41 @@ export function GpDetailsSection() {
 }
 ```
 
-`APP_ENVIRONMENT` and `APP_GIT_SHA` are names the app owns. Set them from the real deploy tier and the build SHA. Do not substitute `NODE_ENV`.
+`NEXT_PUBLIC_APP_ENVIRONMENT` and `NEXT_PUBLIC_APP_GIT_SHA` are public build-time variables the app owns. Next.js only inlines `NEXT_PUBLIC_` values into a client bundle, so a server-only name would be missing in the browser and the tier would fall back to `development`. Set them from the real deploy tier and the build SHA. Do not substitute `NODE_ENV`. The server example below can read `APP_ENVIRONMENT` and `APP_GIT_SHA` directly.
 
 ## Next.js server
 
-Call `configureExperiments`, `initializeExperiments`, and `getVariant` inside the server component that renders the surface. Do not call `getVariant` from the root layout.
+`configureExperiments` and `getVariant` keep one client for the whole process. Do not call them for each server request. Build the identity and a client inside the server component that renders the surface, so concurrent requests cannot read another user's assignment. Do not evaluate the experiment from the root layout.
 
 ```tsx
 import { cookies, headers } from "next/headers";
 import {
-  configureExperiments,
-  getVariant,
-  initializeExperiments,
+  buildExperimentIdentity,
+  createStatsigExperimentClient,
+  readSnowplowDomainUserId,
+  readStableId,
 } from "@simple-online-healthcare/experiments";
 
 export async function GpDetailsSection({ userID }: { userID?: string }) {
+  const clientKey = process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY ?? "";
+  if (!clientKey) return <OldGpDetails />;
+
   const headerStore = await headers();
-  configureExperiments({
-    clientKey: process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY ?? "",
+  const cookieHeader = (await cookies()).toString();
+  const identity = buildExperimentIdentity({
     environment: process.env.APP_ENVIRONMENT ?? "development",
+    hostname: headerStore.get("host") ?? "",
     app: "kin",
     appVersion: process.env.APP_GIT_SHA ?? "development",
     userID,
-    hostname: headerStore.get("host") ?? "",
-    cookieHeader: (await cookies()).toString(),
+    stableID: readStableId(cookieHeader),
+    snowplowDomainUserId: readSnowplowDomainUserId(cookieHeader),
     productionHosts: ["www.simpleonlinepharmacy.co.uk", "simpleonlinepharmacy.co.uk"],
   });
-  await initializeExperiments();
+  const client = createStatsigExperimentClient(clientKey, identity);
+  await client.initializeAsync?.();
 
-  const variant = getVariant("cro-032-gp-details", "gp-details-section");
+  const variant = client.getExperiment("cro-032-gp-details").groupName ?? "";
   return variant === "variant-b" ? <NewGpDetails /> : <OldGpDetails />;
 }
 ```
@@ -148,6 +153,7 @@ Acquire can use the same core. Evaluate the experiment in the script that belong
   import {
     configureExperiments,
     getVariant,
+    initializeExperiments,
     initSnowplowTracker,
   } from "@simple-online-healthcare/experiments";
 
@@ -163,7 +169,9 @@ Acquire can use the same core. Evaluate the experiment in the script that belong
       appVersion: import.meta.env.APP_GIT_SHA ?? "development",
       hostname: window.location.hostname,
     });
-    surface.dataset.variant = getVariant("cro-032-gp-details", "gp-details-section");
+    void initializeExperiments().then(() => {
+      surface.dataset.variant = getVariant("cro-032-gp-details", "gp-details-section");
+    });
   }
 </script>
 ```
@@ -186,7 +194,7 @@ Datadog keeps flags in page memory. Each accepted evaluation is also stored at `
 
 ## Snowplow
 
-`initSnowplowTracker` always sets:
+`initSnowplowTracker` sets these when the page host is `simpleonlinepharmacy.co.uk`. On any other host, including localhost, the caller's cookie options stay unchanged:
 
 - `cookieDomain: ".simpleonlinepharmacy.co.uk"`
 - `cookieName: "_sp_"`

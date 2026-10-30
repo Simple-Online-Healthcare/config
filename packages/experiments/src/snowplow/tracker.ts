@@ -1,5 +1,6 @@
 import { addGlobalContexts, newTracker, type TrackerConfiguration } from "@snowplow/browser-tracker";
 
+import { isSharedCookieHost } from "../cookies/cookies.js";
 import { getSnowplowExperimentContext } from "../core/assignments.js";
 import type { ExperimentAssignment } from "../core/types.js";
 
@@ -11,7 +12,13 @@ export const SNOWPLOW_COOKIE_OPTIONS = {
   cookieSecure: true,
 } as const;
 
-export function withSnowplowCookieOptions(options: TrackerConfiguration = {}): TrackerConfiguration {
+export function withSnowplowCookieOptions(
+  options: TrackerConfiguration = {},
+  hostname?: string
+): TrackerConfiguration {
+  const host = hostname ?? (typeof window === "undefined" ? "" : window.location.hostname);
+  if (!isSharedCookieHost(host)) return options;
+
   return {
     ...options,
     cookieDomain: SNOWPLOW_COOKIE_OPTIONS.cookieDomain,
