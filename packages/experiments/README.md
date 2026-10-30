@@ -68,6 +68,11 @@ export function startExperiments(userID?: string) {
       service: "kin",
     })
   );
+  datadogLogs.init({
+    clientToken: process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN ?? "",
+    site: "datadoghq.eu",
+    service: "kin",
+  });
   initSnowplowTracker("sp", process.env.NEXT_PUBLIC_SNOWPLOW_COLLECTOR_URL ?? "", {
     appId: "kin",
   });
@@ -164,9 +169,9 @@ Acquire can use the same core. Evaluate the experiment in the script that belong
     });
     configureExperiments({
       clientKey: import.meta.env.PUBLIC_STATSIG_CLIENT_KEY ?? "",
-      environment: import.meta.env.APP_ENVIRONMENT ?? "development",
+      environment: import.meta.env.PUBLIC_APP_ENVIRONMENT ?? "development",
       app: "acquire",
-      appVersion: import.meta.env.APP_GIT_SHA ?? "development",
+      appVersion: import.meta.env.PUBLIC_APP_GIT_SHA ?? "development",
       hostname: window.location.hostname,
     });
     void initializeExperiments().then(() => {
@@ -176,7 +181,7 @@ Acquire can use the same core. Evaluate the experiment in the script that belong
 </script>
 ```
 
-Use `APP_ENVIRONMENT` for the tier. Do not use Astro `MODE`.
+Use `PUBLIC_APP_ENVIRONMENT` for the tier. Astro only exposes `PUBLIC_` values to a client script, so an unprefixed name is missing in the browser and the tier falls back to `development`. Do not use Astro `MODE`.
 
 ## Datadog
 
