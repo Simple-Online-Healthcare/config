@@ -7,6 +7,7 @@ This repository is scaffolded as a Lerna + Yarn workspaces monorepo for reusable
 - `@simple-online-healthcare/tsconfig`
 - `@simple-online-healthcare/prettier-conf`
 - `@simple-online-healthcare/eslint-config`
+- `@simple-online-healthcare/experiments`
 
 ## Getting started
 

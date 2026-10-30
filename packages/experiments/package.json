@@ -1,0 +1,55 @@
+{
+  "name": "@simple-online-healthcare/experiments",
+  "version": "0.0.0",
+  "description": "Shared Statsig experiment evaluation, Datadog arm tagging, and Snowplow identity.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simple-online-healthcare/config.git",
+    "directory": "packages/experiments"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./eslint": {
+      "types": "./dist/core/eslint.d.ts",
+      "import": "./dist/core/eslint.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "tsc -p tsconfig.build.json",
+    "test": "node --import tsx --test --test-concurrency=1 tests/*.test.ts"
+  },
+  "dependencies": {
+    "@snowplow/browser-tracker": "^4.6.8",
+    "@statsig/js-client": "3.33.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.3",
+    "eslint": "9.39.4",
+    "tsx": "4.20.3",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "@datadog/browser-logs": ">=5",
+    "@datadog/browser-rum": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "@datadog/browser-logs": {
+      "optional": true
+    },
+    "@datadog/browser-rum": {
+      "optional": true
+    }
+  }
+}
